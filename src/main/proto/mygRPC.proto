@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.example";
+option java_outer_classname = "MygRPC";
+option objc_class_prefix = "HLW";
+
+package com.example;
+
+service BookService {
+  rpc createBook (Book) returns (Book) {}
+  rpc getBook(GetBookRequest) returns (Book){}
+  rpc deleteBook(DeleteBookRequest) returns(Book){}
+  rpc updateBook(UpdateBookRequest) returns(BookResponse){}
+}
+
+
+service YearService{
+  rpc createYear(Year) returns (Year){}
+  rpc getYear(GetYearRequest) returns (Year){}
+  rpc deleteYear(DeleteYearRequest) returns (Year){}
+  rpc updateYear(UpdateYearRequest) returns (YearResponse){}
+}
+//BookService
+message Book{
+  int64 id = 1;
+  string title = 2;
+  string author = 3;
+}
+
+message GetBookRequest{
+  int32 id = 1;
+}
+message DeleteBookRequest{
+  int32 id = 1;
+}
+message UpdateBookRequest{
+  int32 id = 1;
+  string title = 2;
+  string author = 3;
+}
+message BookResponse{
+  bool success = 1;
+}
+
+//YearService
+message Year{
+  int64 id = 1;
+  string value = 2;
+  repeated Book books = 3;//repeated keyword in protobuf means Year can have multiple value of books; oneToMany relationship between year and book.
+}
+message GetYearRequest{
+  int32 id = 1;
+}
+message DeleteYearRequest{
+  int32 id = 1;
+}
+message UpdateYearRequest{
+  int32 id = 1;
+}
+message YearResponse{
+  bool success = 1;
+}
